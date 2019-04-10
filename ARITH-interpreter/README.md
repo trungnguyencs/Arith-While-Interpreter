@@ -9,12 +9,11 @@ We have added the Modulo operator in addition to the required Sum and Mul operat
 ## Running the file
 
 $javac Arith.java <br />
-
 $java Arith
 
 ## Test cases
 
-expr = (5+3) * 2 == 16 
+expr = (5+3) * 2 == 16 <br />
 expr = ((3+5) * (2+8)) % (2*5) == 0
 
 ## Authors
