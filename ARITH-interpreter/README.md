@@ -1,6 +1,6 @@
 # Programming Assignment 1 - The ARITH language:
 
-For the input AST, implement an interpreter in the form of a function called "eval" which takes in an AST and returns the result.
+For the input AST, implement an interpreter in the form of a function called "eval" which takes in an AST of an arithmetic expression and returns the evaluated result for that expression
 
 ## New feature: 
 
