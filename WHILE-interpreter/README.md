@@ -32,7 +32,7 @@ Test case While2: 'i = 0; j = 0; while(i < 10){i\%3 == 0) ? j++ : skip(); i++}' 
 
 ## Languages
 
-We used Java to implement HW1's and Javascript for HW2's interpreter
+We used Java to implement HW1's interpreter and Javascript for HW2's
 
 ## Authors
 Trung Nguyen (tnguy404) and Geetanjali Rakshit (grakshit) worked together for 6 hours
