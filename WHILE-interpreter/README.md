@@ -28,7 +28,7 @@ Test case If2: '(x > 5) ? z = 15 : x = 100;' evaluates to:  { x: 100 }
 
 Test case While1: 'i = 0; while(i < 5){i++;}' evaluates to:  { i: 5 }
 
-Test case While2: 'i = 0; j = 0; while(i < 10){i\%3 == 0) ? j++ : skip(); i++}' evaluates to:  { i: 10, j: 4 }
+Test case While2: 'i = 0; j = 0; while(i < 10){i\%3 == 0) ? j++ : skip(); i++;}' evaluates to:  { i: 10, j: 4 }
 
 ## Languages
 

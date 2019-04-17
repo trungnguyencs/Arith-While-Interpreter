@@ -1,3 +1,6 @@
+// Thanh Trung Nguyen (tnguy404) - Geetanjali Rakshit (grakshit)
+// HW1 language: Java, HW2 language: Javascript
+//
 // Programming Assignment 2 - The WHILE language:
 // In Haskell (or the language of your choice), write an interpreter for the WHILE language 
 // (slides on the WHILE language are available on the course webpage -> resources -> slides ).  
@@ -249,7 +252,7 @@ stmtSkip = "(x = 5; skip();); y = 10;";
 stmtIf1 = "true ? z = 15 : y = 10;";
 stmtIf2 = "(x > 5) ? z = 15 : x = 100;";
 stmtWhile1 = "i = 0; while(i < 5){i++;}";
-stmtWhile2 = "i = 0; j = 0; while(i < 10){i%3 == 0) ? j++ : skip(); i++}";
+stmtWhile2 = "i = 0; j = 0; while(i < 10){i%3 == 0) ? j++ : skip(); i++;}";
 
 console.log('----------------------------------------------------------------------------');
 var s = {}; console.log("Test case Assign: '" + stmtAsgn + "' evaluates to: ", tcAsgn.eval(s));
