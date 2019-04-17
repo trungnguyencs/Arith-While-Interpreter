@@ -219,7 +219,6 @@ var_x = new Var('x');
 asgn_x = new Asgn('x', new Int(5));
 asgn_y = new Asgn('y', new Int(10));
 asgn_z = new Asgn('z', new Int(15));
-asgn_x1 = new Asgn('x', new Int(100));
 
 // Test case for Assign():
 tcAsgn = asgn_x;
@@ -230,6 +229,7 @@ tcSkip = new Seq(new Seq(asgn_x, new Skip()), asgn_y);
 // Test case 1 for If():
 tcIf1 = new If(new Bool(true), asgn_z, asgn_y);
 // Test case 2 for If():
+asgn_x1 = new Asgn('x', new Int(100));
 tcIf2 = new If(new Greater(asgn_x, new Int(6)), asgn_z, asgn_x1);
 // Test case 1 for While():
 While1_cond = new Smaller(new Var('i'), new Int(5)); 
@@ -250,7 +250,7 @@ stmtAsgn = "x = 5;";
 stmtSeq = "(x = 5; y = 10); z = 15;";
 stmtSkip = "(x = 5; skip();); y = 10;";
 stmtIf1 = "true ? z = 15 : y = 10;";
-stmtIf2 = "(x > 5) ? z = 15 : x = 100;";
+stmtIf2 = "(x > 6) ? z = 15 : x = 100;";
 stmtWhile1 = "i = 0; while(i < 5){i++;}";
 stmtWhile2 = "i = 0; j = 0; while(i < 10){i%3 == 0) ? j++ : skip(); i++;}";
 
