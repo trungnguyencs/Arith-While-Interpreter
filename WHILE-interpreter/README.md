@@ -4,7 +4,7 @@ For the input AST of an arithmetic expression, implement an interpreter in the f
 
 ## New feature: 
 
-We have added the following operators in addition to the required operators:
+We have added the following operators in addition to the required ones:
 - Div
 - Mod
 - GreaterEq
@@ -35,4 +35,4 @@ Test case While2: 'i = 0; j = 0; while(i < 10){i\%3 == 0) ? j++ : skip(); i++}' 
 We used Java to implement HW1's interpreter and Javascript for HW2's
 
 ## Authors
-Trung Nguyen (tnguy404) and Geetanjali Rakshit (grakshit) worked together for 6 hours
+Trung Nguyen (tnguy404) and Geetanjali Rakshit (grakshit) worked together for 7 hours
