@@ -27,10 +27,10 @@ function Int(n){
         return this.n;
     }
 }
-function Var(v){
-    this.v = v;
+function Var(x){
+    this.x = x;
     this.eval = function(s){
-        return s[this.v];
+        return s[this.x];
     }
 }
 function Sum(e1, e2){
@@ -54,13 +54,6 @@ function Mul(e1, e2){
         return this.e1.eval(s) * this.e2.eval(s);
     }
 }
-function Div(e1, e2){
-    this.e1 = e1;
-    this.e2 = e2;
-    this.eval = function(s){
-        return this.e1.eval(s) / this.e2.eval(s);
-    }
-}
 function Mod(e1, e2){
     this.e1 = e1;
     this.e2 = e2;
@@ -68,11 +61,11 @@ function Mod(e1, e2){
         return this.e1.eval(s) % this.e2.eval(s);
     }
 }
+
 Int.prototype = new Aexp();
 Sum.prototype = new Aexp();
 Minus.prototype = new Aexp();
 Mul.prototype = new Aexp();
-Div.prototype = new Aexp();
 Mod.prototype = new Aexp();
 
 // ----------------------------
@@ -88,45 +81,45 @@ function Bool(b) {
         return this.b;
     }
 }
-function Not(b) {
-    this.b = b;
-    this.eval = function(s){
-        return ! this.b.eval(s);
-    }
-}
-function Equal(b1, b2){
+function Equals(b1, b2){
     this.b1 = b1;
     this.b2 = b2;
     this.eval = function(s){
         return this.b1.eval(s) == this.b2.eval(s);
     }
 }
-function Smaller(b1, b2){
+function LessThan(b1, b2){
     this.b1 = b1;
     this.b2 = b2;
     this.eval = function(s){
         return this.b1.eval(s) < this.b2.eval(s);
     }
 }
-function Greater(b1, b2){
+function GreaterThan(b1, b2){
     this.b1 = b1;
     this.b2 = b2;
     this.eval = function(s){
         return this.b1.eval(s) > this.b2.eval(s);
     }
 }
-function SmallerEq(b1, b2){
+function LessOrEq(b1, b2){
     this.b1 = b1;
     this.b2 = b2;
     this.eval = function(s){
         return this.b1.eval(s) <= this.b2.eval(s);
     }
 }
-function GreaterEq(b1, b2){
+function GreaterOrEq(b1, b2){
     this.b1 = b1;
     this.b2 = b2;
     this.eval = function(s){
         return this.b1.eval(s) >= this.b2.eval(s);
+    }
+}
+function Not(b) {
+    this.b = b;
+    this.eval = function(s){
+        return ! this.b.eval(s);
     }
 }
 function And(b1, b2) {
@@ -144,19 +137,19 @@ function Or(b1, b2) {
     }
 }
 Bool.prototype = new Bexp();
+Equals.prototype = new Bexp();
+LessThan.prototype = new Bexp();
+GreaterThan.prototype = new Bexp();
+LessOrEq.prototype = new Bexp();
+GreaterOrEq.prototype = new Bexp();
 Not.prototype = new Bexp();
-Equal.prototype = new Bexp();
-Smaller.prototype = new Bexp();
-Greater.prototype = new Bexp();
-SmallerEq.prototype = new Bexp();
-GreaterEq.prototype = new Bexp();
 And.prototype = new Bexp();
 Or.prototype = new Bexp();
 
 // ----------------------------
 // Command
 // ----------------------------
-function Comm(){
+function Command(){
     this.eval = function(s){
     }
 }
@@ -174,11 +167,11 @@ function Seq(c1, c2){
 			return s2;
 	}
 }
-function Asgn(varName, e){
-	this.varName = varName;
-	this.e = e;
+function Assign(x, val){
+	this.x = x;
+	this.val = val;
 	this.eval = function(s){
-		s[this.varName] = this.e.eval(s);
+		s[this.x] = this.val.eval(s);
 		return s;
 	}
 }
@@ -206,55 +199,63 @@ function While(b, c){
 		return s;
 	}
 }
-Skip.prototype = new Comm();
-Seq.prototype = new Comm();
-Asgn.prototype = new Comm();
-If.prototype = new Comm();
-While.prototype = new Comm();
+Skip.prototype = new Command();
+Seq.prototype = new Command();
+Assign.prototype = new Command();
+If.prototype = new Command();
+While.prototype = new Command();
 
 // ----------------------------
 // Test cases
 // ----------------------------
 var_x = new Var('x');
-asgn_x = new Asgn('x', new Int(5));
-asgn_y = new Asgn('y', new Int(10));
-asgn_z = new Asgn('z', new Int(15));
+assign_x = new Assign('x', new Int(5));
+assign_y = new Assign('y', new Int(10));
+assign_z = new Assign('z', new Int(15));
+assign_x1 = new Assign('x', new Int(100));
 
+// Test case for Or():
+tcOr = new Or(new LessThan(new Int(5), new Int(6)), new Not(new LessThan(new Int(5), new Int(6))));
+// Test case for And():
+tcAnd = new And(new And(new GreaterOrEq(new Minus(new Int(6), new Int(1)), new Int(6)), new LessOrEq(new Int(5), new Mul(new Int(5), new Int(2)))), new Bool(false));
 // Test case for Assign():
-tcAsgn = asgn_x;
+tcAsgn = assign_x;
 // Test case for Seq():
-tcSeq = new Seq(new Seq(asgn_x, asgn_y), asgn_z);
+tcSeq = new Seq(new Seq(assign_x, assign_y), assign_z);
 // Test case for Skip():
-tcSkip = new Seq(new Seq(asgn_x, new Skip()), asgn_y);
+tcSkip = new Seq(new Seq(assign_x, new Skip()), assign_y);
 // Test case 1 for If():
-tcIf1 = new If(new Bool(true), asgn_z, asgn_y);
+tcIf1 = new If(new Bool(true), assign_z, assign_y);
 // Test case 2 for If():
-asgn_x1 = new Asgn('x', new Int(100));
-tcIf2 = new If(new Greater(asgn_x, new Int(6)), asgn_z, asgn_x1);
+tcIf2 = new If(new GreaterThan(assign_x, new Int(6)), assign_z, assign_x1);
 // Test case 1 for While():
-While1_cond = new Smaller(new Var('i'), new Int(5)); 
-While1_exe = new Asgn('i', new Sum(new Var('i'), new Int(1)));
+While1_cond = new LessThan(new Var('i'), new Int(5)); 
+While1_exe = new Assign('i', new Sum(new Var('i'), new Int(1)));
 While1 = new While(While1_cond, While1_exe);
-tcWhile1 = new Seq(new Asgn('i', new Int(0)), While1);
+tcWhile1 = new Seq(new Assign('i', new Int(0)), While1);
 // Test case 2 for While():
-While2_cond = new Smaller(new Var('i'), new Int(10)); 
-If_cond = new Equal(new Mod(new Var('i'), new Int(3)), new Int(0));
-If_exe = new Asgn('j', new Sum(new Var('j'), new Int(1)));
+While2_cond = new LessThan(new Var('i'), new Int(10)); 
+If_cond = new Equals(new Mod(new Var('i'), new Int(3)), new Int(0));
+If_exe = new Assign('j', new Sum(new Var('j'), new Int(1)));
 While2_exe1 = new If(If_cond, If_exe, new Skip());
-While2_exe2 = new Asgn('i', new Sum(new Var('i'), new Int(1)));
+While2_exe2 = new Assign('i', new Sum(new Var('i'), new Int(1)));
 While2_exe = new Seq(While2_exe1, While2_exe2);
 While2 = new While(While2_cond, While2_exe);
-tcWhile2 = new Seq(new Seq(new Asgn('i', new Int(0)), new Asgn('j', new Int(0))), While2);
+tcWhile2 = new Seq(new Seq(new Assign('i', new Int(0)), new Assign('j', new Int(0))), While2);
 
+stmtOr = "(5 < 6) OR !(5 < 6)";
+stmtAnd = "(((6-1) >= 6) AND (5 <= (5*2))) AND False";
 stmtAsgn = "x = 5;";
 stmtSeq = "(x = 5; y = 10); z = 15;";
 stmtSkip = "(x = 5; skip();); y = 10;";
 stmtIf1 = "true ? z = 15 : y = 10;";
 stmtIf2 = "(x > 6) ? z = 15 : x = 100;";
-stmtWhile1 = "i = 0; while(i < 5){i++;}";
-stmtWhile2 = "i = 0; j = 0; while(i < 10){i%3 == 0) ? j++ : skip(); i++;}";
+stmtWhile1 = "i = 0; while(i < 5){i=i+1;}";
+stmtWhile2 = "i = 0; j = 0; while(i < 10){i%3 == 0) ? j=j+1 : skip(); i=i+1;}";
 
 console.log('----------------------------------------------------------------------------');
+var s = {}; console.log("Test case Or: '" + stmtOr + "' evaluates to: ", tcOr.eval(s));
+var s = {}; console.log("Test case And: '" + stmtAnd + "' evaluates to: ", tcAnd.eval(s));
 var s = {}; console.log("Test case Assign: '" + stmtAsgn + "' evaluates to: ", tcAsgn.eval(s));
 var s = {}; console.log("Test case Seq: '" + stmtSeq + "' evaluates to: ", tcSeq.eval(s));
 var s = {}; console.log("Test case Skip: '" + stmtSkip + "' evaluates to: ", tcSkip.eval(s));
