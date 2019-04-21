@@ -1,6 +1,6 @@
 # Programming Assignment 4 - The WHILE language:
 
-A small step interpreter for the WHILE language (only statements are small step, for AExp and BExp it does not print out the state).  For a small step interpreter it takes a single step, prints out the remaining program and the state, and then takes another step until the remaining program is just a skip.
+Implemetation of a small step interpreter for the WHILE language (only statements are small step, for AExp and BExp it does not print out the state).  For a small step interpreter it takes a single step, prints out the remaining program and the state, and then takes another step until the remaining program is just a skip.
 
 For example, given a program "x := 3; if(x<5) x = x+1 else x = x-1" and an empty state the program prints:
 
@@ -18,7 +18,7 @@ As you can see at each step one statement has been executed and the resulting pr
 
 ## Running the file
 
-$python3 small_step_While
+$python3 small_step_While.py
 
 ## Test cases
 
