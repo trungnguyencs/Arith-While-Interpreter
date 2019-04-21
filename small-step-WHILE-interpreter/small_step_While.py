@@ -63,7 +63,7 @@ class Div(Aexp):
     def eval(self,s):
         return self.e1.eval() / self.e2.eval()
 
-class Mul(Aexp):
+class Mod(Aexp):
     def __init__(self, e1, e2):
         self.e1 = e1
         self.e2 = e2
