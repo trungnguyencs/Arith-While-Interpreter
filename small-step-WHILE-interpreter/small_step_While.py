@@ -40,35 +40,35 @@ class Sum(Aexp):
         self.e1 = e1
         self.e2 = e2
     def eval(self,s):
-        return self.e1.eval() + self.e2.eval()
+        return self.e1.eval(s) + self.e2.eval(s)
 
 class Minus(Aexp):
     def __init__(self, e1, e2):
         self.e1 = e1
         self.e2 = e2
     def eval(self,s):
-        return self.e1.eval() - self.e2.eval()
+        return self.e1.eval(s) - self.e2.eval(s)
 
 class Mul(Aexp):
     def __init__(self, e1, e2):
         self.e1 = e1
         self.e2 = e2
     def eval(self,s):
-        return self.e1.eval() * self.e2.eval()
+        return self.e1.eval(s) * self.e2.eval(s)
 
 class Div(Aexp):
     def __init__(self, e1, e2):
         self.e1 = e1
         self.e2 = e2
     def eval(self,s):
-        return self.e1.eval() / self.e2.eval()
+        return self.e1.eval(s) / self.e2.eval(s)
 
 class Mod(Aexp):
     def __init__(self, e1, e2):
         self.e1 = e1
         self.e2 = e2
     def eval(self,s):
-        return self.e1.eval() % self.e2.eval()
+        return self.e1.eval(s) % self.e2.eval(s)
 
  # ----------------------------
  # Boolean
@@ -80,19 +80,11 @@ class Bexp(object):
     def eval(self,s):
         pass 
 
-class Greater(Bexp):
-    def __init__(self, e1, e2):
-        self.e1 = e1
-        self.e2 = e2
+class Bool(object):
+    def __init__(self, b):
+        self.b = b
     def eval(self,s):
-        return self.e1.eval(s) > self.e2.eval(s)
-
-class GreaterOrEq(Bexp):
-    def __init__(self, e1, e2):
-        self.e1 = e1
-        self.e2 = e2
-    def eval(self,s):
-        return self.e1.eval(s) >= self.e2.eval(s)
+        return self.b
 
 class Equals(Bexp):
     def __init__(self, e1, e2):
@@ -101,12 +93,12 @@ class Equals(Bexp):
     def eval(self,s):
         return self.e1.eval(s) == self.e2.eval(s)
 
-class LessOrEq(Bexp):
+class GreaterThan(Bexp):
     def __init__(self, e1, e2):
         self.e1 = e1
         self.e2 = e2
     def eval(self,s):
-        return self.e1.eval(s) <= self.e2.eval(s)
+        return self.e1.eval(s) > self.e2.eval(s)
 
 class LessThan(Bexp):
     def __init__(self, e1, e2):
@@ -115,6 +107,39 @@ class LessThan(Bexp):
     def eval(self,s):
         return self.e1.eval(s) < self.e2.eval(s)
 
+class GreaterOrEq(Bexp):
+    def __init__(self, e1, e2):
+        self.e1 = e1
+        self.e2 = e2
+    def eval(self,s):
+        return self.e1.eval(s) >= self.e2.eval(s)
+
+class LessOrEq(Bexp):
+    def __init__(self, e1, e2):
+        self.e1 = e1
+        self.e2 = e2
+    def eval(self,s):
+        return self.e1.eval(s) <= self.e2.eval(s)
+
+class Not(Bexp):
+    def __init__(self, e):
+        self.e = e
+    def eval(self,s):
+        return not self.e.eval(s)
+
+class And(Bexp):
+    def __init__(self, e1, e2):
+        self.e1 = e1
+        self.e2 = e2
+    def eval(self,s):
+        return self.e1.eval(s) and self.e2.eval(s)
+
+class Or(Bexp):
+    def __init__(self, e1, e2):
+        self.e1 = e1
+        self.e2 = e2
+    def eval(self,s):
+        return self.e1.eval(s) or self.e2.eval(s)
 # ----------------------------
 # Command
 # ----------------------------
@@ -169,22 +194,48 @@ class While(Command):
         else: 
             return s            
 
-# test cases
+# ----------------------------
+# Test cases
+# ----------------------------
+var_x = Var('x');
+assign_x = Assign('x', Int(5));
+assign_y = Assign('y', Int(10));
+assign_z = Assign('z', Int(15));
+assign_x1 = Assign('x', Int(100));
 
-c1 = Assign('i',Int(0))
-c2 = Assign('x', Int(0))
-ifC1_d1 = Assign('x', Minus(Div(Mul(Sum(Var('x'), Var('i')), Int(4)), Int(2)), Int(-2)))
-ifC1_d2 = Assign('x', Div(Mul(Sum(Var('x'), Var('i')), Int(4)), Int(2)))
-ifC1 = If(Equals(Mul(Var('i'), Int(2)), Int(0)), ifC1_d1, ifC1_d2)
-ifC2_d1 = Assign('y', Int(3))
-ifC2_d2 = Skip()
-ifC2 = If(Greater(Int(3), Int(1)), ifC2_d1, ifC2_d2)
-whileC = Seq(Seq(ifC1, Assign('i', Sum(Var('i'), Int(1)))), ifC2)
-c3 = While(LessThan(Var('i'), Int(5)), whileC)
-testCase1 = Seq(Seq(Seq(c1, Skip()),c2), c3)
-s = dict()
-c3 = While(LessThan(Var('i'), Int(5)), whileC)
-tc0 =  Seq(Seq(Seq(c1, Skip()),c2), c3)
-print(tc0.eval(s))
-print(type(tc0).__name__!="Seq")
-print(type('Skip'))
+#Test case for Or():
+tcOr = Or(LessThan(Int(5), Int(6)), Not(LessThan(Int(5), Int(6))));
+# Test case for And():
+tcAnd = And(And(GreaterOrEq(Minus(Int(6), Int(1)), Int(6)), LessOrEq(Int(5), Mul(Int(5), Int(2)))), Bool(False))
+# Test case for Assign():
+tcAsgn = assign_x
+# Test case for Seq():
+tcSeq = Seq(Seq(assign_x, assign_y), assign_z)
+# Test case for Skip():
+tcSkip = Seq(Seq(assign_x, Skip()), assign_y)
+# Test case 1 for If():
+tcIf1 = If(Bool(True), assign_z, assign_y)
+# Test case 2 for If():
+tcIf2 = If(GreaterThan(assign_x, Int(6)), assign_z, assign_x1)
+
+stmtOr = "(5 < 6) OR !(5 < 6)"
+stmtAnd = "(((6-1) >= 6) AND (5 <= (5*2))) AND False"
+stmtAsgn = "x = 5;"
+stmtSeq = "(x = 5; y = 10); z = 15;"
+stmtSkip = "(x = 5; skip();); y = 10;"
+stmtIf1 = "true ? z = 15 : y = 10;"
+stmtIf2 = "(x > 6) ? z = 15 : x = 100;"
+stmtWhile1 = "i = 0; while(i < 5){i=i+1;}"
+stmtWhile2 = "i = 0; j = 0; while(i < 10){i%3 == 0) ? j=j+1 : skip(); i=i+1;}"
+
+print('----------------------------------------------------------------------------')
+s = {}; print("Test case Or: '" + stmtOr + "' evaluates to: ", tcOr.eval(s))
+s = {}; print("Test case And: '" + stmtAnd + "' evaluates to: ", tcAnd.eval(s))
+s = {}; print("Test case Assign: '" + stmtAsgn + "' evaluates to: ", tcAsgn.eval(s))
+s = {}; print("Test case Seq: '" + stmtSeq + "' evaluates to: ", tcSeq.eval(s))
+s = {}; print("Test case Skip: '" + stmtSkip + "' evaluates to: ", tcSkip.eval(s))
+s = {}; print("Test case If1: '" + stmtIf1 + "' evaluates to: ", tcIf1.eval(s))
+s = {}; print("Test case If2: '" + stmtIf2 + "' evaluates to: ", tcIf2.eval(s))
+# s = {}; print("Test case While1: '" + stmtWhile1 + "' evaluates to: ", tcWhile1.eval(s))
+# s = {}; print("Test case While2: '" + stmtWhile2 + "' evaluates to: ", tcWhile2.eval(s))
+print('----------------------------------------------------------------------------')
