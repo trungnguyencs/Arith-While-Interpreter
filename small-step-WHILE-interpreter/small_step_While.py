@@ -168,7 +168,7 @@ class Seq(Command):
         self.c2 = c2
     def eval(self,s):
         s1 = self.c1.eval(s)
-        s2 = self.c1.eval(s1)
+        s2 = self.c2.eval(s1)
         return s2
 
 class If(Command):
@@ -177,18 +177,18 @@ class If(Command):
         self.c1 = c1
         self.c2 = c2
     def eval(self,s):
-        if b.eval(s):
-            return c1.eval(s) 
+        if self.b.eval(s):
+            return self.c1.eval(s) 
         else:
-            return c2.eval(s) 
+            return self.c2.eval(s) 
 
 class While(Command):
     def __init__(self,b,c):
         self.b = b
         self.c = c
     def eval(self,s):
-        if b.eval(s):
-            s1=c.eval(s)
+        if self.b.eval(s):
+            s1= self.c.eval(s)
             s2 = While(b,c).eval(s1)
             return s2
         else: 
@@ -216,7 +216,8 @@ tcSkip = Seq(Seq(assign_x, Skip()), assign_y)
 # Test case 1 for If():
 tcIf1 = If(Bool(True), assign_z, assign_y)
 # Test case 2 for If():
-tcIf2 = If(GreaterThan(assign_x, Int(6)), assign_z, assign_x1)
+If2 = If(GreaterThan(var_x, Int(6)), assign_z, assign_x1)
+tcIf2 = Seq(assign_x, If2)
 
 stmtOr = "(5 < 6) OR !(5 < 6)"
 stmtAnd = "(((6-1) >= 6) AND (5 <= (5*2))) AND False"

@@ -227,7 +227,8 @@ tcSkip = new Seq(new Seq(assign_x, new Skip()), assign_y);
 // Test case 1 for If():
 tcIf1 = new If(new Bool(true), assign_z, assign_y);
 // Test case 2 for If():
-tcIf2 = new If(new GreaterThan(assign_x, new Int(6)), assign_z, assign_x1);
+If2 = new If(new GreaterThan(var_x, new Int(6)), assign_z, assign_x1);
+tcIf2 = new Seq(assign_x, If2);
 // Test case 1 for While():
 While1_cond = new LessThan(new Var('i'), new Int(5)); 
 While1_exe = new Assign('i', new Sum(new Var('i'), new Int(1)));
