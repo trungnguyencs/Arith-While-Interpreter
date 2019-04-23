@@ -189,7 +189,7 @@ class While(Command):
     def eval(self,s):
         if self.b.eval(s):
             s1= self.c.eval(s)
-            s2 = While(b,c).eval(s1)
+            s2 = While(self.b, self.c).eval(s1)
             return s2
         else: 
             return s            
@@ -218,6 +218,20 @@ tcIf1 = If(Bool(True), assign_z, assign_y)
 # Test case 2 for If():
 If2 = If(GreaterThan(var_x, Int(6)), assign_z, assign_x1)
 tcIf2 = Seq(assign_x, If2)
+# Test case 1 for While():
+While1_cond = LessThan(Var('i'), Int(5)); 
+While1_exe = Assign('i', Sum(Var('i'), Int(1)));
+While1 = While(While1_cond, While1_exe);
+tcWhile1 = Seq(Assign('i', Int(0)), While1);
+# Test case 2 for While():
+While2_cond = LessThan(Var('i'), Int(10)); 
+If_cond = Equals(Mod(Var('i'), Int(3)), Int(0));
+If_exe = Assign('j', Sum(Var('j'), Int(1)));
+While2_exe1 = If(If_cond, If_exe, Skip());
+While2_exe2 = Assign('i', Sum(Var('i'), Int(1)));
+While2_exe = Seq(While2_exe1, While2_exe2);
+While2 = While(While2_cond, While2_exe);
+tcWhile2 = Seq(Seq(Assign('i', Int(0)), Assign('j', Int(0))), While2);
 
 stmtOr = "(5 < 6) OR !(5 < 6)"
 stmtAnd = "(((6-1) >= 6) AND (5 <= (5*2))) AND False"
@@ -237,6 +251,6 @@ s = {}; print("Test case Seq: '" + stmtSeq + "' evaluates to: ", tcSeq.eval(s))
 s = {}; print("Test case Skip: '" + stmtSkip + "' evaluates to: ", tcSkip.eval(s))
 s = {}; print("Test case If1: '" + stmtIf1 + "' evaluates to: ", tcIf1.eval(s))
 s = {}; print("Test case If2: '" + stmtIf2 + "' evaluates to: ", tcIf2.eval(s))
-# s = {}; print("Test case While1: '" + stmtWhile1 + "' evaluates to: ", tcWhile1.eval(s))
-# s = {}; print("Test case While2: '" + stmtWhile2 + "' evaluates to: ", tcWhile2.eval(s))
+s = {}; print("Test case While1: '" + stmtWhile1 + "' evaluates to: ", tcWhile1.eval(s))
+s = {}; print("Test case While2: '" + stmtWhile2 + "' evaluates to: ", tcWhile2.eval(s))
 print('----------------------------------------------------------------------------')
