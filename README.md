@@ -1,7 +1,7 @@
 # Arith-While-Interpreter
-An implementation of interpreters for a) arithmetic expressions and b) expression in the WHILE language
+An implementation of interpreters for 1) arithmetic expressions and 2) expression in the WHILE language
 
-## Arithmetic expressions
+## 1. Arithmetic expressions
 For the input AST of an arithmetic expression, implement an interpreter in the form of a function called "eval" which takes in the AST and returns the evaluated result for that expression
 
 ### Running the file
@@ -14,7 +14,7 @@ For the input AST of an arithmetic expression, implement an interpreter in the f
 expr = (5+3) * 2 == 16 <br />
 expr = ((3+5) * (2+8)) % (2*5) == 0
 
-# The WHILE language
+# 2. The WHILE language
 For the input AST of an expression in the WHILE language, implement an interpreter in the form of a function called "eval" which takes in the AST and returns the evaluated result for that expression
 
 ### Running the file
