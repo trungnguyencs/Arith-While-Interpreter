@@ -6,8 +6,8 @@ For the input AST of an arithmetic expression, implement an interpreter in the f
 
 ### Running the file
 
-$javac Arith.java <br />
-$java Arith
+`$javac Arith.java` <br />
+`$java Arith`
 
 ### Test cases
 
@@ -18,7 +18,7 @@ expr = ((3+5) * (2+8)) % (2*5) == 0
 For the input AST of an expression in the WHILE language, implement an interpreter in the form of a function called "eval" which takes in the AST and returns the evaluated result for that expression
 
 ### Running the file
-$node While.js
+`$node While.js`
 
 ### Test cases
 Test case Or: '(5 < 6) OR !(5 < 6)' evaluates to: true
