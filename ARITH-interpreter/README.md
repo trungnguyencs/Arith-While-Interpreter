@@ -1,4 +1,4 @@
-# Programming Assignment 1 - The ARITH language:
+# The ARITH language:
 
 For the input AST of an arithmetic expression, implement an interpreter in the form of a function called "eval" which takes in the AST  and returns the evaluated result for that expression
 
@@ -15,6 +15,3 @@ $java Arith
 
 expr = (5+3) * 2 == 16 <br />
 expr = ((3+5) * (2+8)) % (2*5) == 0
-
-## Authors
-Trung Nguyen (tnguy404) and Geetanjali Rakshit (grakshit) worked together for 2 hours
