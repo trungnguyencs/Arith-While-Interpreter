@@ -1,4 +1,4 @@
-# Programming Assignment 2 - The WHILE language:
+# The WHILE language:
 
 For the input AST of an arithmetic expression, implement an interpreter in the form of a function called "eval" which takes in the AST  and returns the evaluated result for that expression
 
@@ -32,10 +32,3 @@ Test case If2: '(x > 6) ? z = 15 : x = 100;' evaluates to:  { x: 100 }
 Test case While1: 'i = 0; while(i < 5){i = i+1;}' evaluates to:  { i: 5 }
 
 Test case While2: 'i = 0; j = 0; while(i < 10){i\%3 == 0) ? j = j+1 : skip(); i = i+1;}' evaluates to:  { i: 10, j: 4 }
-
-## Languages
-
-We used Java to implement HW1's interpreter and Javascript for HW2's
-
-## Authors
-Trung Nguyen (tnguy404) and Geetanjali Rakshit (grakshit) worked together for 7 hours
